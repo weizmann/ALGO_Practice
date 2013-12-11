@@ -22,13 +22,17 @@ random_node* init_random_list(const int list_length) {
         list[i].value = i;
     }
     list[list_length - 1].next = NULL;
-    init_random_pointer(list, list_length);
+	list[list_length - 1].value = list_length - 1;
+	init_random_pointer(list, list_length);
     return list;
 }
 
 void init_random_pointer(random_node* list, int list_length) {
     for (int i = 0; i < list_length; i++) {
-        list[i].random = &list[(rand() * 100) % list_length];
+		int recorded_rand = rand();
+		int index = (recorded_rand) % list_length;
+        list[i].random = &list[index];
+		printf("%dth list node random is %d, %d\n", i, index, recorded_rand);
     }
 }
 #define INVAL_NUM 999
@@ -46,6 +50,8 @@ int get_node_value(random_node* wanted_node) {
         return wanted_node->value;
     }
 }
+
+
 
 int main() {
     random_node* list = init_random_list(LIST_LENGTH);
