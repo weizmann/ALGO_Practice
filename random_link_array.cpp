@@ -22,14 +22,22 @@ random_node* init_random_list(const int list_length) {
         list[i].value = i;
     }
     list[list_length - 1].next = NULL;
+<<<<<<< HEAD
     list[list_length - 1].value = list_length - 1;
     init_random_pointer(list, list_length);
+=======
+	list[list_length - 1].value = list_length - 1;
+	init_random_pointer(list, list_length);
+>>>>>>> c3b4f6b2704c375a2fd08aa1a178ffb54310859b
     return list;
 }
 
 void init_random_pointer(random_node* list, int list_length) {
     for (int i = 0; i < list_length; i++) {
-        list[i].random = &list[(rand() * 100) % list_length];
+		int recorded_rand = rand();
+		int index = (recorded_rand) % list_length;
+        list[i].random = &list[index];
+		printf("%dth list node random is %d, %d\n", i, index, recorded_rand);
     }
 }
 #define INVAL_NUM 999
@@ -48,9 +56,36 @@ int get_node_value(random_node* wanted_node) {
     }
 }
 
+void copy_list(random_node* list, int list_length) {
+	for (int i = 0; i < list_length; i++) {
+		random_node* new_node = new random_node(list[i]);
+		new_node->next = list[i].next;
+		new_node->value = i;
+		list[i].next = new_node;
+	}
+	for (int i = 0; i < list_length; i+=2) {
+		list[i+1].random = list[i].random->next;
+	}
+}
+
+random_node* split_list(random_node* list, int list_length) {
+	random_node* new_head = list->next;
+	for (int i = 0; i < list_length; i++) {
+		list->next = new_head->next;
+		new_head->next = new_head->next->next;
+
+		list = list->next;
+		new_head = new_head->next;
+	}
+	return new_head;
+}
+
 int main() {
     random_node* list = init_random_list(LIST_LENGTH);
     print_rand_list(list, LIST_LENGTH);
+	copy_list(list, LIST_LENGTH);
+	random_node* new_list = split_list(list, LIST_LENGTH);
+	print_rand_list(new_list, LIST_LENGTH);
 }
 
 
