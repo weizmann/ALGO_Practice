@@ -4,21 +4,19 @@
 
 using namespace std;
 
-int compute_lowest_price(int *book_array, int single_price, int book_count)  
-{
-	
-}
-
-inline bool compare_function(int a, int b) 
-{
-	return a < b;
-}
-
 class CompareFunc
 {
 public:
 	bool operator() (int a, int b) { return a < b; }
 };
+
+void computeLowestPrice(vector<int>books, int single_price)
+{
+	sort(books.begin(), books.end(), CompareFunc());
+
+	if (books)
+
+}
 
 int main() 
 {
