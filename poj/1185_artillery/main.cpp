@@ -95,7 +95,7 @@ int main() {
 					if ((available_state_in_row[prev_row_state_index] & available_state_in_row[prever_row_state_index]) || (available_state_in_row[state_index] & available_state_in_row[prever_row_state_index])) {
 						continue;
 					}
-					dp[row_index][state_index][prev_row_state_index] = max(dp[row_index][state_index][prev_row_state_index], dp[row_index - 1][prev_row_state_index][prever_row_state_index]);
+					dp[row_index][state_index][prev_row_state_index] = max(dp[row_index][state_index][prev_row_state_index], dp[row_index - 1][prev_row_state_index][prever_row_state_index] + available_cannon_in_row[state_index]);
 					if (dp[row_index][state_index][prev_row_state_index] > MAX_NUM) {
 						MAX_NUM = dp[row_index][state_index][prev_row_state_index];
 					}
